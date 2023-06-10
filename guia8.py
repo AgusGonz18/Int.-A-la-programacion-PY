@@ -38,9 +38,9 @@ def lista (s:list)-> bool:
     return False
 
 #1.6
-Dada una cadena de texto (string), devolver verdadero si ´
+"""Dada una cadena de texto (string), devolver verdadero si ´
 esta es palındroma (se lee igual en ambos sentidos), falso en
-caso contrario.
+caso contrario."""
 
 def palin(s: str)->bool:
     for i in range(len(s)):
