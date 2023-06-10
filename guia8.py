@@ -38,8 +38,8 @@ def lista (s:list)-> bool:
     return False
 
 #1.6
-"""Dada una cadena de texto (string), devolver verdadero si ´
-esta es palındroma (se lee igual en ambos sentidos), falso en
+"""Dada una cadena de texto (string), devolver verdadero si 
+esta es palindroma (se lee igual en ambos sentidos), falso en
 caso contrario."""
 
 def palin(s: str)->bool:
@@ -113,4 +113,51 @@ def sin_vocal(lista: str) ->str:
     return lista2
 
 #2.4
-def reemplazaVocales (s: chr) ->  chr:
+def reemplazaVocales (s:str) -> str:
+    s2:str = ''
+    for i in s:
+        if (i == 'a' or i == 'e' or i == 'i' or i == 'o' or i == 'u'):
+            s2 += '_'
+        else:
+            s2 += i
+    return s2
+
+#2.5
+def daVueltaStr (s: str) -> str:
+    s2: str = ""
+    for i in s:
+        s2 = i + s2
+    return s2
+
+#3.1
+def listaEstudiantes() -> list[str]:
+    listaNombres: list[str] = []
+    nombre: str = input("Ingresar nombre del estudiante: ")
+
+    while nombre != 'listo':
+        listaNombres.append(nombre)
+        nombre = input("Ingresar nombre del estudiante: ")
+
+    return listaNombres
+
+#3.2
+def monedero_simulacion ():
+    monedero: int = 0
+    historial: list[tuple[str,int]] = []
+    i: int = 0
+    historial[i][1] = input("Ingrese la accion a realizar, usando C, D o X")
+
+    while (historial[i][1] != "X"):
+        if (historial[i][1] == "C"):
+            monedero = input ("Ingrese el monto que desea cargar: ") + monedero
+        elif (historial[i][2] == "D"):
+            monedero = monedero - (input ("Ingrese el monto a descontar: "))
+        i = i+1
+        historial[i][1] = input("Ingrese la accion a realizar, usando C, D o X")
+        
+    print ("Historial: ")
+    for i in range(len(historial[i])):
+        print (historial[i][1], historial[i][2])
+        i += 1
+
+    return ("Saldo actual: ", monedero) 
