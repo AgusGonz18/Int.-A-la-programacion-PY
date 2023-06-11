@@ -1,5 +1,8 @@
 #1.1
 
+import random
+
+
 def pertenece(s: list, e: int) -> bool:
     for i in range(len(s)):
         if s[i] == e:
@@ -140,24 +143,99 @@ def listaEstudiantes() -> list[str]:
 
     return listaNombres
 
+
 #3.2
-def monedero_simulacion ():
-    monedero: int = 0
-    historial: list[tuple[str,int]] = []
-    i: int = 0
-    historial[i][1] = input("Ingrese la accion a realizar, usando C, D o X")
+def monedero_simulacion():
+    monedero = 0
+    historial = []
+    i = 0
 
-    while (historial[i][1] != "X"):
-        if (historial[i][1] == "C"):
-            monedero = input ("Ingrese el monto que desea cargar: ") + monedero
-        elif (historial[i][2] == "D"):
-            monedero = monedero - (input ("Ingrese el monto a descontar: "))
-        i = i+1
-        historial[i][1] = input("Ingrese la accion a realizar, usando C, D o X")
-        
-    print ("Historial: ")
-    for i in range(len(historial[i])):
-        print (historial[i][1], historial[i][2])
+    accion = input("Ingrese la acción a realizar, usando C, D o X: ")
+    historial.append((accion, 0))
+
+    while accion != "X":
+        if accion == "C":
+            monto = int(input("Ingrese el monto que desea cargar: "))
+            monedero += monto
+            historial.append((accion, monto))
+        elif accion == "D":
+            monto = int(input("Ingrese el monto a descontar: "))
+            monedero -= monto
+            historial.append((accion, monto))
+
         i += 1
+        accion = input("Ingrese la acción a realizar, usando C, D o X: ")
 
-    return ("Saldo actual: ", monedero) 
+    print("Historial:")
+    for accion, monto in historial:
+        print(accion, monto)
+
+    return "Saldo actual:", monedero
+
+def sieteYMedio():
+    total: int = 0
+    seguirONo: str = 'y'
+    historialCartas: list[int] = []
+    
+    while seguirONo == 'y':
+        carta: int = random.choice([1,2,3,4,5,6,7,10,11,12])
+        historialCartas.append(carta)
+        print('Tu carta es: ', carta)
+        
+        if carta < 10:
+            total += carta
+        else:
+            total += .5
+
+        if total <= 7.5:
+            seguirONo = input('¿Pedis carta? (y/n): ')
+        else:
+            return print('Perdiste, tu total es de: ', total, '\nTus cartas fueron: ', historialCartas)
+
+    return print('Ganaste!, tu total es de: ', total, '\nTus cartas fueron: ', historialCartas)
+
+# Ejercicio 4
+# 4.1)
+def perteneceACadaUno(s:list[list[int]], e:int) -> bool:
+    for i in s:
+        if not (pertenece(i, e)):
+            return False
+    return True
+
+# 4.2)
+def esMatriz(s:list[list[int]]) -> bool:
+    if len(s) == 0 or len(s[0]) == 0:
+        return False
+    
+    for i in range(1,len(s)):
+        if len(s[i]) != len(s[i-1]):
+            return False
+    return True
+
+# 4.3)
+def filasOrdenadas(m:list[list[int]]) -> bool:
+    for i in m:
+        if not ordenados(i):
+            return False
+    return True
+
+# 4.4)
+def generaMatriz(d:int, f:float) -> list[list[int]]:
+    matriz:list[list[int]] = np.random.randint(0,10,(d,d))
+
+    return elevaMatriz(matriz, f)
+
+def elevaMatriz(matriz:list[list[int]], f:int) -> list[list[int]]:
+    matrizElevada: list[list[int]] = []
+
+    if f == 1:
+        return matriz
+
+    for i in range(len(matriz)):
+        matrizElevada.append([])
+        for j in range(len(matriz)):
+            matrizElevada[i].append(0)
+            for n in range(len(matriz)):
+                matrizElevada[i][j] += matriz[i][n] * elevaMatriz(matriz, f-1)[n][j]
+    
+    return matrizElevada
